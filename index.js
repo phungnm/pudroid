@@ -24,7 +24,7 @@ bot.module(dictionaryModule);
 
 
 
-var port = process.env.PORT || '3000';
+var port = process.env.PORT || '3001';
 bot.start(port);
 
 
