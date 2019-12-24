@@ -8,11 +8,11 @@ import (
 
 func DBConn() (db *sql.DB) {
     dbDriver := "mysql"
-    dbUser := "root"
+    dbUser := "pudroid"
     dbPass := "MiPu_Itus"
     dbName := "pudroid"
-    fmt.Printf("Using the story in %s.\n", dbUser+":"+dbPass+"@tcp(104.155.224.180)/"+dbName)
-    db, err := sql.Open(dbDriver, dbUser+":"+dbPass+"@tcp(104.155.224.180)/"+dbName)
+    fmt.Printf("Using the story in %s.\n", dbUser+":"+dbPass+"@tcp(172.20.0.1)/"+dbName)
+    db, err := sql.Open(dbDriver, dbUser+":"+dbPass+"@tcp(172.20.0.1)/"+dbName)
     if err != nil {
         panic(err.Error())
     }
