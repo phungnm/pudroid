@@ -17,7 +17,7 @@ services:
       context: . # Use an image built from the specified dockerfile in the current directory.
       dockerfile: Dockerfile
     ports:
-      - "3000:3001"
+      - "3001:3000"
     tty: true
     working_dir: /app
     volumes:
@@ -29,27 +29,27 @@ services:
 
 
 
-    #MySQL Service
-  db:
-    image: mysql:5.7.22
-    container_name: db
-    restart: unless-stopped
-    tty: true
-    environment:
-      MYSQL_DATABASE: golang
-      MYSQL_ROOT_PASSWORD: your_mysql_root_password
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
-    volumes:
-      - dbdata:/var/lib/mysql/
-      - ./mysql/my.cnf:/etc/mysql/my.cnf
-    networks: # Networks to join (Services on the same network can communicate with each other using their name)
-      privateLan:
-         ipv4_address: 172.20.0.11
-#Volumes
-volumes:
-  dbdata:
-    driver: local
+#     #MySQL Service
+#   db:
+#     image: mysql:5.7.22
+#     container_name: db
+#     restart: unless-stopped
+#     tty: true
+#     environment:
+#       MYSQL_DATABASE: golang
+#       MYSQL_ROOT_PASSWORD: your_mysql_root_password
+#       SERVICE_TAGS: dev
+#       SERVICE_NAME: mysql
+#     volumes:
+#       - dbdata:/var/lib/mysql/
+#       - ./mysql/my.cnf:/etc/mysql/my.cnf
+#     networks: # Networks to join (Services on the same network can communicate with each other using their name)
+#       privateLan:
+#          ipv4_address: 172.20.0.11
+# #Volumes
+# volumes:
+#   dbdata:
+#     driver: local
 
 
 
