@@ -16,15 +16,14 @@ services:
     build:
       context: . # Use an image built from the specified dockerfile in the current directory.
       dockerfile: Dockerfile
-    # ports:
-    #   - "3000:80"
+    ports:
+      - "3000:3001"
     tty: true
     working_dir: /app
     volumes:
       - ./:/app
     networks: # Networks to join (Services on the same network can communicate with each other using their name)
-      privateLan:
-         ipv4_address: 172.20.0.10
+      privateLan
 
 
 
