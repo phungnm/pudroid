@@ -1,20 +1,26 @@
 package database 
 
 import (
-	"database/sql"
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/jinzhu/gorm"
     "fmt"
 )
 
-func DBConn() (db *sql.DB) {
-    dbDriver := "mysql"
+
+func DBConn() (*gorm.DB,error) {
+    dbDriver := "104.155.224.180"
     dbUser := "pudroid"
     dbPass := "MiPu_Itus"
     dbName := "pudroid"
-    fmt.Printf("Using the story in %s.\n", dbUser+":"+dbPass+"@tcp(172.20.0.1)/"+dbName)
-    db, err := sql.Open(dbDriver, dbUser+":"+dbPass+"@tcp(172.20.0.1)/"+dbName)
-    if err != nil {
+   dbURI := fmt.Sprintf("%s:%s@tcp(%s:3306)/%s?charset=%s&parseTime=True",
+		dbUser,
+		dbPass,
+		dbDriver,
+		dbName,
+		"utf8")
+
+	db, err := gorm.Open("mysql", dbURI)
+	if err != nil {
         panic(err.Error())
-    }
-    return db
+	}
+	return db, err
 }
