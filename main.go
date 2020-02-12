@@ -68,5 +68,5 @@ func setupRouter() *gin.Engine {
 
 func main() {
   	router := setupRouter()
-	router.Run(":3001") // Ứng dụng chạy tại cổng 3000
+	router.Run(":3000") // Ứng dụng chạy tại cổng 3000
 }
