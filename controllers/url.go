@@ -53,6 +53,7 @@ func GetShortenUrl(c*gin.Context){
 				}
 			
 		}else {
+				fmt.Println(errs)
 			  c.JSON(500, gin.H{"error": "Error"})
 		}
 }

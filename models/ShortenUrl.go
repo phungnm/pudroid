@@ -47,7 +47,11 @@ func GetShortenUrlByCode(code string) (*ShortenUrl,error) {
 	sUrl := ShortenUrl{}
 
 	shit := db.Where("code = ?", code).First(&sUrl).Error
+
 	if shit!=nil {
+		if(gorm.IsRecordNotFoundError(shit) ){
+			return &sUrl,nil
+		}
 		return &sUrl,shit
 	} else{
 		return &sUrl,nil
@@ -66,8 +70,6 @@ func GetAllShortenUrl() (*[]ShortenUrl,[]error) {
 	} else{
 	return &urls,nil
 	}
-
-
 }
 
 
