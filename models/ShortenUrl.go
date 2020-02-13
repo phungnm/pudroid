@@ -10,7 +10,7 @@ import(
 type ShortenUrl struct {
 	gorm.Model
 	Code string ` json:"code"`
-	Url string `json:"url"`
+	Url string `json:"url" binding:"required"`
 }
 func DBMigrate() (*gorm.DB){
 	db,err := database.DBConn()
@@ -38,7 +38,7 @@ func (u *ShortenUrl) Update() {
 	db.Save(&u)
 
 }
-func GetShortenUrlByCode(code string) (*ShortenUrl,error) {
+func GetShortenAPIByCode(code string) (*ShortenUrl,error) {
 	db,err := database.DBConn()
 	defer db.Close()
 	if err != nil {

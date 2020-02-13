@@ -31,6 +31,9 @@
   <link href="/assets/css/font-awesome.css" rel="stylesheet">
   <!-- Pudroid CSS -->
   <link type="text/css" href="/assets/css/argon.css?v=1.1.1" rel="stylesheet">
+  <link type="text/css" href="/assets/css/animate.css" rel="stylesheet">
+
+  
 </head>
 
 <body>
@@ -239,13 +242,18 @@
   <script src="/assets/vendor/bootstrap/bootstrap.min.js"></script>
   <script src="/assets/vendor/headroom/headroom.min.js"></script>
     <script src="/assets/js/font-awesome.js"></script>
-  
+        <script src="/assets/js/bootstrap-notify.min.js"></script>
+
   <!-- Optional JS -->
   <script src="/assets/vendor/onscreen/onscreen.min.js"></script>
   <script src="/assets/vendor/nouislider/js/nouislider.min.js"></script>
   <script src="/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
   <!-- Pudroid JS -->
   <script src="/assets/js/argon.js?v=1.1.1"></script>
+
+  {{range $index, $element := .extra_js}}
+    <script src="/assets/js/{{$element}}"></script>
+{{end}}
 </body>
 
 </html>

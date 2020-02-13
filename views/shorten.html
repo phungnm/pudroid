@@ -1,11 +1,12 @@
 {{define "content"}}
+
 <div class="row">
             <div class="col-lg-12 col-sm-12">
             	<h2  class="text-secondary display-1 mb-5 text-center">URL Shortener</h2>
-              <div class="card shadow">
-                <div class="card-body">
-                    <h4 class="mb-3 display-4 text-center">Paste the URL to be shortened</h4>
-<div class="row justify-content-md-center" >
+              <div class="card bg-gradient-secondary shadow">
+                <div  class="card-body">
+                    <h4 class="mb-3 display-4 text-center"><b>Paste the URL to be shortened</b></h4>
+<div class="row justify-content-center" >
           <div class="col-lg-9 col-sm-9">
             
             <div class="form-group">
@@ -14,15 +15,26 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-link"></i></span>
                 </div>
-                <input class="form-control" placeholder="Enter the link here" type="text">
+                <input id="url-input" class="form-control" placeholder="Enter the link here" type="text">
                 	<div class="input-group-append">
-    <button class="btn btn-default" type="button">Shorten URL</button>
+    <button disabled id="shorten-submit" class="btn btn-primary" type="button">Shorten URL</button>
   </div>
               </div>
             </div>
           </div>
 
         </div>
+<div id="shorten-result" style="display:none" class=" row justify-content-center" >
+   <div id="shorten-list" class="  col-lg-9 col-sm-9">
+        <h4 class="display-4 mt-3 text-center"><b>Your shortened URL</b></h4>
+        <h6 class="mb-3 text-muted">Copy the shortened link and share it in messages, texts, posts, websites and other locations.</h6>
+
+
+
+      </div>
+</div>
+
+
                                  </div>
               </div>
             </div>

@@ -3,11 +3,14 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"pudroid/controllers"
+	"pudroid/config"
 	"github.com/foolin/gin-template"
 	"net/http"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/thoas/go-funk"
+	"strconv"
+
 )
 func AuthenticationRequired(auths ...string) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -47,26 +50,30 @@ func setupRouter() *gin.Engine {
 		DisableCache: true,
 	})
 	shortenURL_api := router.Group("/api/shortenUrl")
-	{	shortenURL_api.Use(AuthenticationRequired("subscriber"))
+	{	
+		//shortenURL_api.Use(AuthenticationRequired("subscriber"))
 
-				  shortenURL_api.GET("/get", controllers.GetShortenUrl)
-			  shortenURL_api.POST("/add", controllers.AddShortenUrl)
+				  shortenURL_api.GET("/get", controllers.GetShortenAPI)
+			  shortenURL_api.POST("/add", controllers.AddShortenAPI)
 	
 	}
 	shortenURL := router.Group("/shorten")
 	{	
 		 shortenURL.GET("/",  func(ctx *gin.Context) {
-				ctx.HTML(http.StatusOK,"shorten", gin.H{"title": "URL Shortener"})
+				ctx.HTML(http.StatusOK,"shorten", gin.H{"title": "URL Shortener","extra_js": []string{"apps/shorten.js"} })
 				})
-	
+		//shortenURL.GET("/:code", controllers.GetShorten)
+		router.GET("/go/:code", controllers.GetShorten)
+
 	}
 	router.GET("/view/:page", func(ctx *gin.Context) {
-				ctx.HTML(http.StatusOK, ctx.Param("page"), gin.H{"title": "URL Shortener"})
+		ctx.HTML(http.StatusOK, ctx.Param("page"), gin.H{
+					"title": "URL Shortener", })
 	})
 	return router
 }
 
 func main() {
   	router := setupRouter()
-	router.Run(":3000") // Ứng dụng chạy tại cổng 3000
+	router.Run(":"+strconv.Itoa(config.Config.Port)) // Ứng dụng chạy tại cổng 3000
 }
