@@ -1,7 +1,7 @@
 var last_url="";
 var last_custom="";
 var total_url=0;
-var regex = RegExp(/(https?:\/\/)?([\w\-])+\.{1}([a-zA-Z]{2,63})([\/\w-]*)*\/?\??([^#\n\r]*)?#?([^\n\r]*)/g);
+var regex = RegExp(/(https?:\/\/)?([\w\-])+\.{1}([a-zA-Z]{2,63})([\/\w-]*)*\/?\??([^#\n\r]*)?#?([^\n\r]*)/);
 $(document).ready(function($) {
 	
 	$("#shorten-list").delegate('.shorten-copy', 'click', function(event) {
@@ -95,8 +95,9 @@ button.prop("disabled",false);
 	});
 	$("#url-input").keyup(function(){
 		let check = regex.test($(this).val());
-		console.log(check,last_url!=$(this).val());
-		if(last_url!=$(this).val()&&check) $("#shorten-submit").prop("disabled",false);
+		console.log($(this).val(),check);
+		if(last_url!=$(this).val()&&check)
+		 $("#shorten-submit").prop("disabled",false);
 		else $("#shorten-submit").prop("disabled",true);
 	});
 	$("#custom-input").keyup(function(){
