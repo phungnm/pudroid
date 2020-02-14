@@ -1,5 +1,7 @@
 var last_url="";
+var last_custom="";
 var total_url=0;
+var regex = RegExp(/(https?:\/\/)?([\w\-])+\.{1}([a-zA-Z]{2,63})([\/\w-]*)*\/?\??([^#\n\r]*)?#?([^\n\r]*)/g);
 $(document).ready(function($) {
 	
 	$("#shorten-list").delegate('.shorten-copy', 'click', function(event) {
@@ -31,18 +33,24 @@ button.prop("disabled",false);
 		if($("#shorten-submit").prop("disabled"));
 		else
 		{
+			let data ={
+				url:$("#url-input").val(),
+			};
+			if($("#custom-input").val()!="")
+			data.code = $("#custom-input").val();
+			let json =	JSON.stringify(data);
 			$("#shorten-submit").prop("disabled",true)
 				$.ajax({
 					url: '/api/shortenUrl/add',
 					async: true,
 					type: 'post',
-					data: `
-					{
-						"url": "${$("#url-input").val()}"
-					}`,
+					data: json,
 					contentType: "application/json",
 					success: function(result) {
 						last_url = $("#url-input").val();
+						last_custom = $("#custom-input").val();
+						$("#url-input").val("");
+						$("#custom-input").val("");
 						show_url = last_url.substring(0,60);
 						if(last_url.length>60)
 						show_url+= "...";
@@ -64,7 +72,7 @@ button.prop("disabled",false);
 						if(total_url==0) $("#shorten-result").show();
 						total_url++;
 						$.notify({
-							message: 'Success',
+							message: "Success!"
 						}, {
 							type: 'success',
 							newest_on_top: true,
@@ -73,6 +81,7 @@ button.prop("disabled",false);
 					},
 						error: function(e) {
 							$.notify({
+							title:"Fail!",
 							message: e.responseJSON.error,
 						}, {
 							type: 'danger',
@@ -85,11 +94,19 @@ button.prop("disabled",false);
 
 	});
 	$("#url-input").keyup(function(){
-		regex = RegExp(/(https?:\/\/)?([\w\-])+\.{1}([a-zA-Z]{2,63})([\/\w-]*)*\/?\??([^#\n\r]*)?#?([^\n\r]*)/g);
 		let check = regex.test($(this).val());
 		console.log(check,last_url!=$(this).val());
 		if(last_url!=$(this).val()&&check) $("#shorten-submit").prop("disabled",false);
 		else $("#shorten-submit").prop("disabled",true);
+	});
+	$("#custom-input").keyup(function(){
+		let check = regex.test(	$("#url-input").val());
+		if(check)
+		{
+			$("#shorten-submit").prop("disabled",false);
+		}
+		
+		
 	});
 
 });

@@ -1,22 +1,42 @@
 {{define "content"}}
+  <main>
+    <div class="position-relative">
+      <!-- Hero for FREE version -->
+      <section class="section section-lg section-hero section-shaped">
+           
 
-<div class="row">
+        <div class="shape shape-style-1 shape-primary">
+          <span class="span-150"></span>
+          <span class="span-50"></span>
+          <span class="span-50"></span>
+          <span class="span-75"></span>
+          <span class="span-100"></span>
+          <span class="span-75"></span>
+          <span class="span-50"></span>
+          <span class="span-100"></span>
+          <span class="span-50"></span>
+          <span class="span-100"></span>
+        </div>
+        <div class="container shape-container d-flex align-items-center py-lg">
+          <div class="col px-0">
+            <div class="row">
             <div class="col-lg-12 col-sm-12">
-            	<h2  class="text-secondary display-1 mb-5 text-center">URL Shortener</h2>
+              <h2  class="text-secondary display-1 mb-5 text-center">URL Shortener</h2>
               <div class="card bg-gradient-secondary shadow">
                 <div  class="card-body">
                     <h4 class="mb-3 display-4 text-center"><b>Paste the URL to be shortened</b></h4>
-<div class="row justify-content-center" >
+
+<div class="row no-gutters justify-content-center" >
           <div class="col-lg-9 col-sm-9">
             
-            <div class="form-group">
-              <div class="input-group mb-4">
+            <div class="form-group mb-3">
+              <div class="input-group ">
 
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-link"></i></span>
                 </div>
                 <input id="url-input" class="form-control" placeholder="Enter the link here" type="text">
-                	<div class="input-group-append">
+                  <div class="input-group-append">
     <button disabled id="shorten-submit" class="btn btn-primary" type="button">Shorten URL</button>
   </div>
               </div>
@@ -24,6 +44,27 @@
           </div>
 
         </div>
+        <div class="row d-flex align-items-center no-gutters justify-content-center" >
+          <div class="col-lg-6 col-sm-5 ">
+                      <label class="text-muted mr-1 float-right" for="custom-input">
+Optional short link ending. Custom ending goes here: </label>
+                </div>
+                        <div class="col-lg-3 col-sm-4 ">
+                  <div class="pd-0 form-group">
+                       <div class="input-group ">
+                          <div class="input-group-prepend">
+ <span class="text-muted pr-0  input-group-text">
+pudroid.cf/go/</span>
+</div>
+                    <input id="custom-input" type="text" placeholder="Custom" class=" form-control">
+                  </div>
+                  </div>
+
+                </div>
+                                        
+
+              </div>
+
 <div id="shorten-result" style="display:none" class=" row justify-content-center" >
    <div id="shorten-list" class="  col-lg-9 col-sm-9">
         <h4 class="display-4 mt-3 text-center"><b>Your shortened URL</b></h4>
@@ -40,6 +81,19 @@
             </div>
           
           </div>
+          </div>
+        </div>
+        <!-- SVG separator -->
+        <div class="separator separator-bottom separator-skew zindex-100">
+          <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+          </svg>
+        </div>
 
+
+      </section>
+    </div>
+
+  </main>
 
  {{end}}

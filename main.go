@@ -49,6 +49,8 @@ func setupRouter() *gin.Engine {
 		Master:    "layouts/master",
 		DisableCache: true,
 	})
+
+	//ROUTER
 	shortenURL_api := router.Group("/api/shortenUrl")
 	{	
 		//shortenURL_api.Use(AuthenticationRequired("subscriber"))
@@ -62,10 +64,13 @@ func setupRouter() *gin.Engine {
 		 shortenURL.GET("/",  func(ctx *gin.Context) {
 				ctx.HTML(http.StatusOK,"shorten", gin.H{"title": "URL Shortener","extra_js": []string{"apps/shorten.js"} })
 				})
-		//shortenURL.GET("/:code", controllers.GetShorten)
 		router.GET("/go/:code", controllers.GetShorten)
 
 	}
+
+	router.GET("/", func(ctx *gin.Context) {
+		ctx.HTML(http.StatusOK,"index", gin.H{"title": "URL Shortener","extra_js": []string{"apps/shorten.js"} })
+				})	
 	router.GET("/view/:page", func(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, ctx.Param("page"), gin.H{
 					"title": "URL Shortener", })

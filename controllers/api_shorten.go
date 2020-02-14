@@ -24,7 +24,7 @@ func AddShortenAPI(c * gin.Context){
 					"ShortenUrl" :  sUrl,
 				})
 			} else {
-				c.JSON(400, gin.H{"error": "Code already existed"})
+				c.JSON(400, gin.H{"error": "Custom code already existed"})
 			}
 		} else{
 			sUrl.Create()
