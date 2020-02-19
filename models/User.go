@@ -2,7 +2,7 @@ package models
 
 import(
 	"pudroid/database"
-	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	
 )
