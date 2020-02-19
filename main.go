@@ -1,6 +1,8 @@
 package main
 
 import (
+	// "fmt"
+	//"pudroid/database"
 	"github.com/gin-gonic/gin"
 	"pudroid/controllers"
 	"pudroid/config"
@@ -10,7 +12,6 @@ import (
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/thoas/go-funk"
 	"strconv"
-
 )
 func AuthenticationRequired(auths ...string) gin.HandlerFunc {
 	return func(c *gin.Context) {

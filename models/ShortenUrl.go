@@ -2,24 +2,13 @@ package models
 
 import(
 	"pudroid/database"
-	"github.com/jinzhu/gorm"
-	//"fmt"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
-
 type ShortenUrl struct {
-	gorm.Model
-	Code string ` json:"code"`
-	Url string `json:"url" binding:"required"`
+database.ShortenUrl
 }
-func DBMigrate() (*gorm.DB){
-	db,err := database.DBConn()
-	if err != nil {
-        panic(err.Error())
-	}
-	db = db.AutoMigrate(&ShortenUrl{})
-	return db
-}
+
+
 func (u *ShortenUrl) Create() {
 	db,err := database.DBConn()
 	defer db.Close()
@@ -38,7 +27,7 @@ func (u *ShortenUrl) Update() {
 	db.Save(&u)
 
 }
-func GetShortenAPIByCode(code string) (*ShortenUrl,error) {
+func GetShortenUrl(data map[string]interface{}) (*ShortenUrl,error) {
 	db,err := database.DBConn()
 	defer db.Close()
 	if err != nil {
@@ -46,12 +35,10 @@ func GetShortenAPIByCode(code string) (*ShortenUrl,error) {
 	}
 	sUrl := ShortenUrl{}
 
-	shit := db.Where("code = ?", code).First(&sUrl).Error
+	shit := db.Where(data).First(&sUrl).Error
 
 	if shit!=nil {
-		if(gorm.IsRecordNotFoundError(shit) ){
-			return &sUrl,nil
-		}
+		
 		return &sUrl,shit
 	} else{
 		return &sUrl,nil

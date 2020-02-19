@@ -55,7 +55,7 @@ button.prop("disabled",false);
 						if(last_url.length>60)
 						show_url+= "...";
 						$("#shorten-list").append(` 
-   <a target="_blank" title="${last_url}"  data-toggle="tooltip"  href="${last_url}"> ${show_url}</a>
+   <a id="shorten-result-${total_url}" target="_blank" title="${last_url}"  data-toggle="tooltip"  href="${last_url}"> ${show_url}</a>
 			<div class="form-group">
               <div class="input-group  mb-4">
                 <div class="input-group-prepend">
@@ -67,10 +67,16 @@ button.prop("disabled",false);
     <button  attr-target="shorten-input-${total_url}" class="shorten-copy btn btn-warning" type="button"><i class="far fa-clipboard mr-1"></i> Copy </button>
   </div>
               </div>
-            </div>`)
-
+            </div>`);
 						if(total_url==0) $("#shorten-result").show();
-						total_url++;
+						
+						let offset = $(`#shorten-result-${total_url}`).offset().top  ;
+						offset = offset - ($( window ).height()/2) - $(`#shorten-result-${total_url}`).height()/2;
+						console.log(offset);
+						$('html, body').animate({
+						    scrollTop: (offset)
+						},500);
+total_url++;
 						$.notify({
 							message: "Success!"
 						}, {
@@ -96,7 +102,7 @@ button.prop("disabled",false);
 	$("#url-input").keyup(function(){
 		let check = regex.test($(this).val());
 		console.log($(this).val(),check);
-		if(last_url!=$(this).val()&&check)
+		if(check)
 		 $("#shorten-submit").prop("disabled",false);
 		else $("#shorten-submit").prop("disabled",true);
 	});

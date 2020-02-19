@@ -7,6 +7,11 @@ import (
 type Configuration struct {
     Port              int
     Base_URL   		string
+      DBDriver string
+	    DBUser string
+	    DBPass string
+	    DBName string
+
 }
 func init() {
 	dir, _ := os.Getwd()

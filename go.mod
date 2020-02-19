@@ -7,6 +7,7 @@ require (
 	github.com/codegangsta/envy v0.0.0-20141216192214-4b78388c8ce4 // indirect
 	github.com/codegangsta/gin v0.0.0-20171026143024-cafe2ce98974 // indirect
 	github.com/cosmtrek/air v1.12.0 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.9.0 // indirect
 	github.com/foolin/gin-template v0.0.0-20190415034731-41efedfb393b
 	github.com/gin-contrib/sessions v0.0.3

@@ -9,7 +9,7 @@ import(
 
 func GetShorten(c*gin.Context){
 		code := c.Param("code")
-		result,errs := models.GetShortenAPIByCode(code)
+		result,errs := models.GetShortenUrl(map[string]interface{}{ "code": code})
 
 		if (errs == nil) {
 			if(*result!=models.ShortenUrl{}){

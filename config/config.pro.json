@@ -1,4 +1,8 @@
 {
      "Port": 3000,
-     "Base_URL": "https://pudroid.cf"
+     "Base_URL": "https://pudroid.cf",
+         "DBDriver" : "104.155.224.180",
+	    "DBUser" : "pudroid",
+	    "DBPass" : "MiPu_Itus",
+	    "DBName" : "pudroid",
 }
