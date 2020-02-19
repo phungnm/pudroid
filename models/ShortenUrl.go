@@ -36,13 +36,7 @@ func GetShortenUrl(data map[string]interface{}) (*ShortenUrl,error) {
 	sUrl := ShortenUrl{}
 
 	shit := db.Where(data).First(&sUrl).Error
-
-	if shit!=nil {
-		
-		return &sUrl,shit
-	} else{
-		return &sUrl,nil
-	}
+	return &sUrl,shit
 }
 func GetAllShortenUrl() (*[]ShortenUrl,[]error) {
 	var urls []ShortenUrl
@@ -52,11 +46,7 @@ func GetAllShortenUrl() (*[]ShortenUrl,[]error) {
         panic(err.Error())
 	}
 	errors := db.Find(&urls).GetErrors()
-	if errors!=nil {
 	return &urls,errors
-	} else{
-	return &urls,nil
-	}
 }
 
 

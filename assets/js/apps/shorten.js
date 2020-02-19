@@ -30,73 +30,7 @@ button.prop("disabled",false);
 	});
 	$("#shorten-submit").on('click',function(event){
 
-		if($("#shorten-submit").prop("disabled"));
-		else
-		{
-			let data ={
-				url:$("#url-input").val(),
-			};
-			if($("#custom-input").val()!="")
-			data.code = $("#custom-input").val();
-			let json =	JSON.stringify(data);
-			$("#shorten-submit").prop("disabled",true)
-				$.ajax({
-					url: '/api/shortenUrl/add',
-					async: true,
-					type: 'post',
-					data: json,
-					contentType: "application/json",
-					success: function(result) {
-						last_url = $("#url-input").val();
-						last_custom = $("#custom-input").val();
-						$("#url-input").val("");
-						$("#custom-input").val("");
-						show_url = last_url.substring(0,60);
-						if(last_url.length>60)
-						show_url+= "...";
-						$("#shorten-list").append(` 
-   <a id="shorten-result-${total_url}" target="_blank" title="${last_url}"  data-toggle="tooltip"  href="${last_url}"> ${show_url}</a>
-			<div class="form-group">
-              <div class="input-group  mb-4">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-link"></i></span>
-                </div>
-                <input id="shorten-input-${total_url}" value=" pudroid.cf/go/${result.ShortenUrl.code}" readonly class="shorten-input input-info  form-control" type="text">
 
-                  <div class="input-group-append">
-    <button  attr-target="shorten-input-${total_url}" class="shorten-copy btn btn-warning" type="button"><i class="far fa-clipboard mr-1"></i> Copy </button>
-  </div>
-              </div>
-            </div>`);
-						if(total_url==0) $("#shorten-result").show();
-						
-						let offset = $(`#shorten-result-${total_url}`).offset().top  ;
-						offset = offset - ($( window ).height()/2) - $(`#shorten-result-${total_url}`).height()/2;
-						console.log(offset);
-						$('html, body').animate({
-						    scrollTop: (offset)
-						},500);
-total_url++;
-						$.notify({
-							message: "Success!"
-						}, {
-							type: 'success',
-							newest_on_top: true,
-						});
-
-					},
-						error: function(e) {
-							$.notify({
-							title:"Fail!",
-							message: e.responseJSON.error,
-						}, {
-							type: 'danger',
-							newest_on_top: true,
-						});
-					}
-				});
-
-		}
 
 	});
 	$("#url-input").keyup(function(){
@@ -112,8 +46,6 @@ total_url++;
 		{
 			$("#shorten-submit").prop("disabled",false);
 		}
-		
-		
 	});
 
 });

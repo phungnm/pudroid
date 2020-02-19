@@ -37,13 +37,5 @@ func GetUser(data map[string]interface{}) (*User,error) {
 	user := User{}
 
 	shit := db.Where(data).First(&user).Error
-
-	if shit!=nil {
-		if(gorm.IsRecordNotFoundError(shit) ){
-			return &user,nil
-		}
-		return &user,shit
-	} else{
-		return &user,nil
-	}
+	return &user,shit
 }

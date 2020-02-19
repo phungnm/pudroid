@@ -10,6 +10,7 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.9.0 // indirect
 	github.com/foolin/gin-template v0.0.0-20190415034731-41efedfb393b
+	github.com/gin-contrib/cors v1.3.0
 	github.com/gin-contrib/sessions v0.0.3
 	github.com/gin-gonic/contrib v0.0.0-20191209060500-d6e26eeaa607
 	github.com/gin-gonic/gin v1.5.0

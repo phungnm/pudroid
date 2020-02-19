@@ -12,6 +12,7 @@ import (
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/thoas/go-funk"
 	"strconv"
+	"github.com/gin-contrib/cors"
 )
 func AuthenticationRequired(auths ...string) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -81,5 +82,6 @@ func setupRouter() *gin.Engine {
 
 func main() {
   	router := setupRouter()
+  	router.Use(cors.Default())
 	router.Run(":"+strconv.Itoa(config.Config.Port)) // Ứng dụng chạy tại cổng 3000
 }
