@@ -40,6 +40,7 @@ func AuthenticationRequired(auths ...string) gin.HandlerFunc {
 }
 func setupRouter() *gin.Engine {
 	router := gin.Default()
+	router.Use(cors.Default())
 	router.Static("/public", "./public")
 	router.Static("/assets", "./assets")
 	store := cookie.NewStore([]byte("secret"))
@@ -82,6 +83,6 @@ func setupRouter() *gin.Engine {
 
 func main() {
   	router := setupRouter()
-  	router.Use(cors.Default())
+  	
 	router.Run(":"+strconv.Itoa(config.Config.Port)) // Ứng dụng chạy tại cổng 3000
 }
