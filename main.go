@@ -78,7 +78,13 @@ func setupRouter() *gin.Engine {
 		ctx.HTML(http.StatusOK, ctx.Param("page"), gin.H{
 					"title": "URL Shortener", })
 	})
-	router.Use(cors.New(cors.Config{
+	
+	return router
+}
+
+func main() {
+  	router := setupRouter()
+  	router.Use(cors.New(cors.Config{
 		AllowMethods:     []string{"GET", "POST", "OPTIONS", "PUT"},
 		AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type", "User-Agent", "Referrer", "Host", "Token"},
 		ExposeHeaders:    []string{"Content-Length"},
@@ -86,11 +92,5 @@ func setupRouter() *gin.Engine {
 		AllowAllOrigins:  true,
 		MaxAge:           86400,
 	}))
-	return router
-}
-
-func main() {
-  	router := setupRouter()
-  	
 	router.Run(":"+strconv.Itoa(config.Config.Port)) // Ứng dụng chạy tại cổng 3000
 }
