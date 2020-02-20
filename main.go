@@ -6,10 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"pudroid/controllers"
 	"pudroid/config"
-	"github.com/foolin/gin-template"
+	//"github.com/foolin/gin-template"
 	"net/http"
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/cookie"
+	//"github.com/gin-contrib/sessions"
+	//"github.com/gin-contrib/sessions/cookie"
 	"github.com/thoas/go-funk"
 	"strconv"
 	"github.com/gin-contrib/cors"
@@ -43,15 +43,15 @@ func setupRouter() *gin.Engine {
 
 	router.Static("/public", "./public")
 	router.Static("/assets", "./assets")
-	store := cookie.NewStore([]byte("secret"))
-	router.Use(sessions.Sessions("mysession", store))
-	//new template engine
-	router.HTMLRender = gintemplate.New(gintemplate.TemplateConfig{
-		Root:      "views/",
-		Extension: ".html",
-		Master:    "layouts/master",
-		DisableCache: true,
-	})
+	// store := cookie.NewStore([]byte("secret"))
+	// router.Use(sessions.Sessions("mysession", store))
+	// //new template engine
+	// router.HTMLRender = gintemplate.New(gintemplate.TemplateConfig{
+	// 	Root:      "views/",
+	// 	Extension: ".html",
+	// 	Master:    "layouts/master",
+	// 	DisableCache: true,
+	// })
 
 	//ROUTER
 	shortenURL_api := router.Group("/api/shortenUrl")
