@@ -17,6 +17,7 @@ require (
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/gorilla/mux v1.7.3 // indirect
 	github.com/gorilla/sessions v1.2.0 // indirect
+	github.com/itsjamie/gin-cors v0.0.0-20160420130702-97b4a9da7933
 	github.com/jinzhu/gorm v1.9.11
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/mattn/go-shellwords v1.0.10 // indirect
