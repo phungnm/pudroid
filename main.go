@@ -84,7 +84,6 @@ func setupRouter() *gin.Engine {
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 		AllowAllOrigins:  true,
-		AllowOriginFunc:  func(origin string) bool { return true },
 		MaxAge:           86400,
 	}))
 	return router
