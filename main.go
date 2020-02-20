@@ -83,7 +83,7 @@ func setupRouter() *gin.Engine {
 		AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type", "User-Agent", "Referrer", "Host", "Token"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
-		AllowAllOrigins:  false,
+		AllowAllOrigins:  true,
 		AllowOriginFunc:  func(origin string) bool { return true },
 		MaxAge:           86400,
 	}))
