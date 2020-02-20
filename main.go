@@ -40,7 +40,7 @@ func AuthenticationRequired(auths ...string) gin.HandlerFunc {
 }
 func setupRouter() *gin.Engine {
 	router := gin.Default()
-	router.Use(cors.Default())
+
 	router.Static("/public", "./public")
 	router.Static("/assets", "./assets")
 	store := cookie.NewStore([]byte("secret"))
@@ -78,6 +78,7 @@ func setupRouter() *gin.Engine {
 		ctx.HTML(http.StatusOK, ctx.Param("page"), gin.H{
 					"title": "URL Shortener", })
 	})
+	router.Use(cors.Default())
 	return router
 }
 
