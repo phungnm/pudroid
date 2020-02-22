@@ -15,11 +15,11 @@ func GetShorten(c*gin.Context){
 			if(*result!=models.ShortenUrl{}){
 				c.Redirect(http.StatusMovedPermanently, result.Url)
 			}else {
-					c.JSON(500, gin.H{"error": "Can't find this shorten_url"})
+					c.JSON(http.StatusOK, gin.H{"status":0,"error": "Can't find this shorten_url"})
 				}
 			
 		}else {
 				fmt.Println(errs)
-			  c.JSON(500, gin.H{"error": "Error"})
+			  c.JSON(http.StatusOK, gin.H{"status":0,"error": "Error"})
 		}
 }

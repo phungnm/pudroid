@@ -8,7 +8,7 @@ import(
 	"github.com/jinzhu/gorm"
 )
 func HelloUrl(c * gin.Context){
-	c.JSON(200,  gin.H{
+	c.JSON(200,  gin.H{ "status": 1,
 			"message" : "Hello This is Pudroid Url"})
 }
 func AddShortenAPI(c * gin.Context){
@@ -20,19 +20,20 @@ func AddShortenAPI(c * gin.Context){
 			checkUrl,_ := models.GetShortenUrl(map[string]interface{}{ "code": sUrl.Code})
 			if (*checkUrl==models.ShortenUrl{}) {
 							sUrl.Create()
-				c.JSON(http.StatusOK,  gin.H{
+				c.JSON(http.StatusOK,  gin.H{ "status": 1,
+
 					"message" : "Success",
 					"ShortenUrl" :  sUrl,
 				})
 			} else {
-				c.JSON(http.StatusOK, gin.H{"error": "Custom code already existed"})
+				c.JSON(http.StatusOK, gin.H{ "status": 0,"error": "Custom code already existed"})
 			}
 		} else{
 			sUrl.Create()
 			sUrl.Code = fmt.Sprint(sUrl.ID)
 			sUrl.Update()
 
-			c.JSON(200,  gin.H{
+			c.JSON(200,  gin.H{ "status": 1,
 					"message" : "Success",
 					"ShortenUrl" :  sUrl,
 				})
@@ -41,7 +42,7 @@ func AddShortenAPI(c * gin.Context){
 
 	} else {
 		fmt.Println(err.Error())
-		c.JSON(500, gin.H{"error": err.Error()})
+		c.JSON(500, gin.H{ "status": 1,"error": err.Error()})
 	}
 }
 func GetShortenAPI(c*gin.Context){
@@ -49,16 +50,16 @@ func GetShortenAPI(c*gin.Context){
 		result,errs := models.GetShortenUrl(map[string]interface{}{ "code": code})
 
 		if (errs == nil) {
-			c.JSON(http.StatusBadRequest,gin.H{
+			c.JSON(http.StatusBadRequest,gin.H{ "status": 1,
 			"shorten_url": result})
 					
 			
 		}else {
 			if(gorm.IsRecordNotFoundError(errs)){
-					c.JSON(http.StatusNotFound, gin.H{"error": "Can't find this shorten_url"})
+					c.JSON(http.StatusNotFound, gin.H{ "status": 1,"error": "Can't find this shorten_url"})
 			}else {
 				fmt.Println(errs)
-			  c.JSON(http.StatusBadRequest, gin.H{"error": "Error"})
+			  c.JSON(http.StatusBadRequest, gin.H{ "status": 1,"error": "Error"})
 			}
 		}
 }
