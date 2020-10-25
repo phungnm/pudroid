@@ -4,7 +4,7 @@ import (
 	// "fmt"
 	//"pudroid/database"
 	"github.com/gin-gonic/gin"
-	"pudroid/controllers"
+	 "pudroid/controllers/app_controllers"
 	"pudroid/config"
 	"github.com/foolin/gin-template"
 	"net/http"
@@ -54,30 +54,21 @@ func setupRouter() *gin.Engine {
 	})
 
 	//ROUTER
-	shortenURL_api := router.Group("/api/shortenUrl")
-	{	
-		//shortenURL_api.Use(AuthenticationRequired("subscriber"))
-
-				  shortenURL_api.GET("/get", controllers.GetShortenAPI)
-			  shortenURL_api.POST("/add", controllers.AddShortenAPI)
-	
-	}
-	shortenURL := router.Group("/shorten")
-	{	
-		 shortenURL.GET("/",  func(ctx *gin.Context) {
-				ctx.HTML(http.StatusOK,"shorten", gin.H{"title": "URL Shortener","extra_js": []string{"apps/shorten.js"} })
-				})
-		router.GET("/go/:code", controllers.GetShorten)
-
-	}
-
 	router.GET("/", func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK,"index", gin.H{"title": "URL Shortener","extra_js": []string{"apps/shorten.js"} })
-				})	
-	router.GET("/view/:page", func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK, ctx.Param("page"), gin.H{
-					"title": "URL Shortener", })
-	})
+		ctx.HTML(http.StatusOK,"index", gin.H{"title": "Home","menu_home": true,"extra_js": []string{} })
+	})	
+	tools := router.Group("/tools")
+	{
+		tools.GET("/convertColumnComma", app_controllers.ConvertColumnComma)
+		tools.GET("/splitExcel", app_controllers.SplitExcel)
+		tools.GET("/checkIP", app_controllers.CheckIP)
+		tools.POST("/splitExcel", app_controllers.SubmitSplitExcel)
+
+
+		
+	}
+
+
 	return router
 }
 

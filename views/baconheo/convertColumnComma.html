@@ -1,0 +1,139 @@
+{{define "content"}}
+<div class="col-md-12">
+
+    <div class="card">
+      <div class="card-header card-header-primary">
+        <h4 class="card-title">Convert Column to Comma Separated List</h4>
+      </div>
+      <div class="card-body">
+
+
+<div class="row">
+          
+          <div class="col-md-5">
+            <div class="form-group">
+              <label>Columns</label>
+              <textarea id="data-to-comma" rows="5" class="form-control textarea" placeholder="Enter (or paste) your column of data here"></textarea>
+            </div>
+          </div>
+<div class=" center col-md-2">
+
+
+
+<div class="row"> 
+<div class="col-md-12  ">
+<div class="radio">
+<label><input type="radio" value="1" name="delimiter_to_comma" checked=""> <b>", " (dấu phẩy)</b></label>
+</div>
+<div class="radio">
+<label><input type="radio" value="2" name="delimiter_to_comma"> <b>";" (chấm phẩy)</b></label>
+</div>
+<div class="radio">
+<label><input type="radio" value="0" name="delimiter_to_comma"> <b>Custom</b></label>
+</div>
+             <div class="form-group">
+              <label>Delimiter</label>
+              <input style="font-size:18px!important" readonly="" id="delimiter-to-comma" value=", " class="form-control ">
+            </div>
+</div>
+</div>
+
+
+</div>
+          <div class="col-md-5">
+            <div class="form-group">
+              <label>Comma Separated List 
+
+              
+              </label>  
+      <span id="copy-result-to-comma" class="badge badge-primary pointer"><i class="far fa-clipboard"></i> Copy</span>
+              <textarea style="background-color:#ccffcc" id="result-to-comma" placeholder="Your comma separated list of data will appear here" rows="5" class=" form-control textarea"></textarea>
+            </div>
+          </div>
+
+        </div>
+
+
+
+      </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="card">
+      <div class="card-header card-header-primary">
+        <h4 class="card-title">Convert Comma Separated List to Column</h4>
+      </div>
+      <div class="card-body">
+
+
+<div class="row">
+          
+          <div class="col-md-5">
+            <div class="form-group">
+              <label>Comma Separated List</label>
+              <textarea id="data-to-column" rows="5" class="form-control textarea" placeholder="Enter (or paste) your comma separated list of data"></textarea>
+            </div>
+          </div>
+<div class=" center col-md-2">
+
+
+
+<div class="row"> 
+<div class="col-md-12  ">
+             <div class="radio">
+<label><input type="radio" value="1" name="delimiter_to_column" checked=""> <b>", " (dấu phẩy)</b></label>
+</div>
+<div class="radio">
+<label><input type="radio" value="2" name="delimiter_to_column"> <b>";" (chấm phẩy)</b></label>
+</div>
+<div class="radio">
+<label><input type="radio" value="0" name="delimiter_to_column"> <b>Custom</b></label>
+</div>
+             <div class="form-group">
+              <label>Delimiter</label>
+              <input style="font-size:18px!important" readonly="" id="delimiter-to-column" value=", " class="form-control ">
+            </div>
+</div>
+</div>
+
+
+</div>
+          <div class="col-md-5">
+            <div class="form-group">
+              <label>Column</label>
+              <span id="copy-result-to-column" class="badge badge-primary pointer"><i class="far fa-clipboard"></i> Copy</span>
+              <textarea style="background-color:#ccffcc" id="result-to-column" placeholder="Your column will appear here" rows="5" class="form-control textarea"></textarea>
+            </div>
+          </div>
+
+        </div>
+
+
+
+      </div>
+</div>
+
+
+
+</div>
+{{end}}

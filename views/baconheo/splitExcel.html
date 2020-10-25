@@ -1,0 +1,51 @@
+{{define "content"}}
+<div class="row">
+
+  <div class="col-md-12">
+  
+                <div class="card">
+                  <div class="card-header card-header-primary">
+                    <h4 class="card-title">Split CSV</h4>
+                    <p class="card-category">Split a CSV file to multiple files</p>
+                  </div>
+                  <div class="card-body">
+                    <form class="mt-3" id="tool-split-form">
+                      <div class="row">
+                         <div class="col-md-6">
+  
+                                            <div class="form-group">
+                                                  <label>Số rows</label>
+                                                   <input placeholder="Number of rows" id="tool-split-input-rows" required="" type="number" class="form-control border-input">
+                                              </div>
+  
+                              </div>
+                               <div class=" mb-2 col-md-12">
+  <div class="form-check">
+      <label style="color:#2c2c2c!important" class="form-check-label">
+          <input id="keep-header-input" class="form-check-input" type="checkbox" value="">
+          Set first line as header
+          <span class="form-check-sign">
+              <span class="check"></span>
+          </span>
+      </label>
+  </div>
+                                </div>
+                  <div class="col-md-12">
+  
+                               <input accept=".xlsx, .xls, .csv" required="" id="tool-split-input-file" type="file">
+  
+                                </div>
+                                               
+                           </div>
+                      <button id="tool-split-submit" type="submit" class="btn btn-primary btn-md float-right">Submit</button>
+                      <div class="clearfix"></div>
+                    </form>
+                  </div>
+                  <div class="card-footer border-top">
+                   <div style="display:none" id="tool-split-result-el"><h5> File: <span id="tool-split-result"></span></h5></div> 
+                  </div>
+    </div>
+  </div>
+              
+  </div>
+{{end}}
