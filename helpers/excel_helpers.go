@@ -2,90 +2,182 @@ package helpers
 
 import (
 	"bufio"
-	"container/list"
 	"encoding/csv"
-	// "encoding/json"
 	"fmt"
-	// "io"
-	// "log"
-	// "net/http"
+	"io"
 	"os"
-	// "path/filepath"
 	"github.com/tealeg/xlsx"
-	//"strings"
+	"strings"
+	"math"
+	"strconv"
+	"path/filepath"
+	"archive/zip"
 )
+func ZipFolder(targetPath string, savePath string, fileName string) error {
+	os.MkdirAll(savePath,0777)
+	zipfile, err := os.Create(savePath+"/"+fileName)
+	if err != nil {
+		return err
+	}
+	defer zipfile.Close()
 
-func ReadCsvFile(filePath string) []map[string]interface{} {
+	archive := zip.NewWriter(zipfile)
+	defer archive.Close()
+
+	info, err := os.Stat(targetPath)
+	if err != nil {
+		return nil
+	}
+
+	var baseDir string
+	if info.IsDir() {
+		baseDir = filepath.Base(targetPath)
+	}
+
+	filepath.Walk(targetPath, func(path string, info os.FileInfo, err error) error {
+		if targetPath==path {
+			return nil
+		}
+		if err != nil {
+			return err
+		}
+
+		header, err := zip.FileInfoHeader(info)
+		if err != nil {
+			return err
+		}
+
+		if baseDir != "" {
+			header.Name = strings.TrimPrefix(path, targetPath)
+		}
+
+		if info.IsDir() {
+			header.Name += "/"			
+		} else {
+			header.Method = zip.Deflate
+		}
+
+		writer, err := archive.CreateHeader(header)
+		if err != nil {
+			return err
+		}
+
+		if info.IsDir() {
+			return nil
+		}
+
+		file, err := os.Open(path)
+
+		if err != nil {
+			return err
+		}
+		defer file.Close()
+		_, err = io.Copy(writer, file)
+		return err
+	})
+
+	return err
+}
+
+func ReadCsvFile(filePath string) [][]string {
 	// Load a csv file.
 	f, _ := os.Open(filePath)
 	// Create a new reader.
 	r := csv.NewReader(bufio.NewReader(f))
 	result, _ := r.ReadAll()
-	parsedData := make([]map[string]interface{}, 0, 0)
-	header_name := result[0]
+	parsedData := make([][]string, 0, 0)
 
-	for row_counter, row := range result {
 
-		if row_counter != 0 {
-			var singleMap = make(map[string]interface{})
-			for col_counter, col := range row {
-				singleMap[header_name[col_counter]] = col
+	for _, row := range result {
+
+			var singleRow = make([]string,0,0)
+			for _, col := range row {
+				singleRow = append(singleRow,col)
 			}
-			if len(singleMap) > 0 {
+			if len(singleRow) > 0 {
 
-				parsedData = append(parsedData, singleMap)
+				parsedData = append(parsedData, singleRow)
 			}
-		}
+		
 	}
 	fmt.Println("Length of parsedData:", len(parsedData))
 	return parsedData
-
 }
 
-func ReadXlsxFile(filePath string) []map[string]interface{} {
+func ReadXlsxFile(filePath string) [][]string {
 	xlFile, err := xlsx.OpenFile(filePath)
 	if err != nil {
 		fmt.Println("Error reading the file")
 	}
 
-	parsedData := make([]map[string]interface{}, 0, 0)
-	header_name := list.New()
+	parsedData := make([][]string, 0, 0)
+	
 	// sheet
 	for _, sheet := range xlFile.Sheets {
 		// rows
-		for row_counter, row := range sheet.Rows {
+		for _, row := range sheet.Rows {
 
 			// column
-			header_iterator := header_name.Front()
-			var singleMap = make(map[string]interface{})
+			var singleRow = make([]string,0,0)
 
 			for _, cell := range row.Cells {
-				if row_counter == 0 {
 					text := cell.String()
-					header_name.PushBack(text)
-				} else {
-					text := cell.String()
-					singleMap[header_iterator.Value.(string)] = text
-					header_iterator = header_iterator.Next()
-				}
+					singleRow = append(singleRow,text)
 			}
-			if row_counter != 0 && len(singleMap) > 0 {
-
-				parsedData = append(parsedData, singleMap)
+			if len(singleRow) > 0 {
+				parsedData = append(parsedData, singleRow)
 			}
-
 		}
 	}
 	fmt.Println("Length of parsedData:", len(parsedData))
+
+
+
 	return parsedData
 }
+func SaveCSV(savePath string,fileName string, parsedData [][]string) {
+	os.MkdirAll(savePath,0777)
+	file, _ := os.Create(savePath+"/"+fileName)
+	
+    defer file.Close()
+    writer := csv.NewWriter(file)
+    defer writer.Flush()
 
-func ExcelCsvParser(blobPath string, blobExtension string) (parsedData []map[string]interface{}) {
+    for _, value := range parsedData {
+       writer.Write(value)
+    }
+}
+func SaveExcel(savePath string,fileName string, parsedData [][]string) {
+	os.MkdirAll(savePath,0777)
+	var file *xlsx.File
+    var sheet *xlsx.Sheet
+    var row *xlsx.Row
+    var cell *xlsx.Cell
+    var err error
+
+    file = xlsx.NewFile()
+    sheet, err = file.AddSheet("Sheet")
+    if err != nil {
+        fmt.Printf(err.Error())
+	}
+	for _, row_value := range parsedData {
+		row = sheet.AddRow()
+		for _, cell_value := range row_value {
+			cell = row.AddCell()
+    		cell.Value = cell_value
+		}
+	}
+   
+    err = file.Save(savePath+"/"+fileName)
+    if err != nil {
+        fmt.Printf(err.Error())
+    }
+}
+func ExcelCsvParser(blobPath string, blobExtension string) (parsedData [][]string) {
 	fmt.Println("---------------> We are in product.go")
 	if blobExtension == ".csv" {
 		fmt.Println("-------We are parsing an csv file.-------------")
 		parsedData := ReadCsvFile(blobPath)
-		fmt.Printf("Type:%T\n", parsedData)
 		return parsedData
 
 	} else if blobExtension == ".xlsx" {
@@ -95,6 +187,41 @@ func ExcelCsvParser(blobPath string, blobExtension string) (parsedData []map[str
 	}
 	return parsedData
 }
-func Test() (){
+
+func SplitExcel(filePath string,records int, savePath string,keep_header int) (url string) {
+
+	i := strings.LastIndex(filePath, ".")
+	i2 := strings.LastIndex(filePath, "/")+1
+
+	extension :=filePath[i:len(filePath)]
+	fileName:= filePath[i2:i]
+
+	parsedData := ExcelCsvParser(filePath,extension)
+	header := parsedData[0]
+	if(keep_header==1) {
+		parsedData = parsedData[1:len(parsedData)]
+	}
+	files := int(math.Ceil( float64(len(parsedData))/ float64(records)))
+	for i := 1; i <= files; i++ {
+		from := (i-1) * records
+		to := i * records
+		if to>len(parsedData){
+			to = len(parsedData)
+		}
+		data_save := parsedData[from:to]
+		if(keep_header==1) {
+			data_save = append([][]string{header}, data_save...)
+		}
+		if extension==".csv" {
+			SaveCSV(savePath,fileName+"_"+strconv.Itoa(i)+".csv",data_save) 
+		} else if extension==".xlsx"{
+			SaveExcel(savePath,fileName+"_"+strconv.Itoa(i)+".xlsx",data_save) 
+		}
+	}
+	
+	return extension
+
+}
+func Test() {
 
 }

@@ -15,9 +15,11 @@ var full_ip_dac_biet = ["192.168.11.226","192.168.11.227","103.199.32.58","103.7
 
 var ip_warning = ["113.185."];
 var full_ip_warning = [];
-function handleFile(e) {
+var reader;
+
+function readExcelFile(e) {
     var files = e.target.files, f = files[0];
-    var reader = new FileReader();
+	reader = new FileReader();
     reader.onload = function(e) {
       var data = new Uint8Array(e.target.result);
       var workbook = XLSX.read(data, {type: 'array'});
@@ -25,13 +27,25 @@ function handleFile(e) {
       workbook.SheetNames.forEach(function(name) {
           result.push(XLSX.utils.sheet_to_json(workbook.Sheets[name],{header: 1}));
       });
-      console.log(workbook,result);
-  checkIP(result[0]);
+	  console.log(workbook,result);
+	  ip_rows = result[0];
+	  if(ip_rows)
+	  {
+		  try {
+			checkIP();
+		  } catch (error) {
+			  //notify here
+			$("#tool-check-ip-waiting").hide();
+			toastr.error("Lỗi rồi, thử lại nhé.","Lỗi!");
+		  }
+	  }
+
+  
       /* DO SOMETHING WITH workbook HERE */
     };
     reader.readAsArrayBuffer(f);
 }
-function checkIP(ip_rows)
+function checkIP()
 {
     ip_rows.forEach(function(ip,index) {
     ip_rows[index][5]= checkLevelIp(ip[2]);
@@ -79,9 +93,8 @@ function checkIP(ip_rows)
     })
     ip_duplicate_table.draw();
     console.log("done 2");
-
-    $("#tool-checkIP-submit").html("Load file");
-    $("#tool-checkIP-submit").prop("disabled",false);
+	toastr.success("Load file thành công.","Thành công!");
+	$("#tool-check-ip-waiting").hide();
 }
 function checkLevelIp(ip)
 {
@@ -117,7 +130,6 @@ function viewDetailIp(target_ip)
 	ip_rows.forEach(function(ip) {
 		if(ip[2]==target_ip)
 		{
-
 			let dom = ip[2]?ip[2]:"NULL";
 								
 								if(ip[5]==2)								
@@ -172,7 +184,12 @@ function checkDuplicate(rows)
 		return result;
 }
 
-document.getElementById('tool-checkIP-input-file').addEventListener('change', handleFile, false);
+document.getElementById('tool-checkIP-input-file').addEventListener('change', function (e){
+	if(e.target.files.length!=0){
+	toastr.remove();
+	$("#tool-check-ip-waiting").show();readExcelFile(e);
+	}
+}, false);
 
 $(document).ready(function ($) {
 	jQuery.fn.dataTable.Api.register('processing()', function(show) {

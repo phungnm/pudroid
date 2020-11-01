@@ -20,6 +20,11 @@
     <link rel="stylesheet" type="text/css" href="/assets/vendors/css/extensions/tether-theme-arrows.css">
     <link rel="stylesheet" type="text/css" href="/assets/vendors/css/extensions/tether.min.css">
     <link rel="stylesheet" type="text/css" href="/assets/vendors/css/extensions/shepherd-theme-default.css">
+    <link rel="stylesheet" type="text/css" href="/assets/vendors/css/extensions/toastr.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/plugins/extensions/toastr.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/assets/vendors/css/animate/animate.css">
+
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -323,6 +328,8 @@
                         </li>
                         <li class=" {{if .checkIP}}active{{end}}"><a href="/tools/checkIP"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Shop">Check IP</span></a>
                         </li>
+                        <li class=" {{if .queryTable}}active{{end}}"><a href="/tools/queryTable"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Shop">Query Table</span></a>
+                        </li>
                     </ul>
                 </li>
            
@@ -589,6 +596,7 @@
     <script src="/assets/vendors/js/charts/apexcharts.min.js"></script>
     <script src="/assets/vendors/js/extensions/tether.min.js"></script>
     <script src="/assets/vendors/js/extensions/shepherd.min.js"></script>
+    <script src="/assets/vendors/js/extensions/toastr.min.js"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -601,7 +609,7 @@
     <script src="/assets/js/scripts/pages/dashboard-analytics.js"></script>
 
     <script src="/assets/js/scripts/customizer.js"></script>
-    
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <!-- END: Page JS-->
     {{range $index, $element := .extra_js}}
     <script src="/assets/js/{{$element}}"></script>

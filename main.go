@@ -42,6 +42,7 @@ func AuthenticationRequired(auths ...string) gin.HandlerFunc {
 func setupRouter() *gin.Engine {
 	router := gin.Default()
 	router.Static("/public", "./public")
+	router.Static("/tickets", "./tickets")
 	router.Static("/assets", "./assets")
 	store := cookie.NewStore([]byte("secret"))
 	router.Use(sessions.Sessions("mysession", store))
@@ -63,6 +64,8 @@ func setupRouter() *gin.Engine {
 		tools.GET("/splitExcel", app_controllers.SplitExcel)
 		tools.GET("/checkIP", app_controllers.CheckIP)
 		tools.POST("/splitExcel", app_controllers.SubmitSplitExcel)
+		tools.GET("/queryTable", app_controllers.QueryTable)
+
 
 
 		

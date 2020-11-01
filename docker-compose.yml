@@ -17,7 +17,7 @@ services:
       context: . # Use an image built from the specified dockerfile in the current directory.
       dockerfile: Dockerfile
     ports:
-      - "3001:3000"
+      - "3000:3000"
     tty: true
     working_dir: /app
     volumes:
